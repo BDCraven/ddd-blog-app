@@ -11,15 +11,17 @@ Rails.configuration.to_prepare do
   end
 
   # Subscribe event handlers below
-  # Rails.configuration.event_store.tap do |store|
-  #   store.subscribe(InvoiceReadModel.new, to: [InvoicePrinted])
-  #   store.subscribe(->(event) { SendOrderConfirmation.new.call(event) }, to: [OrderSubmitted])
-  #   store.subscribe_to_all_events(->(event) { Rails.logger.info(event.type) })
-  # end
+  Rails.configuration.event_store.tap do |store|
+    # store.subscribe(InvoiceReadModel.new, to: [InvoicePrinted])
+    # store.subscribe(->(event) { SendOrderConfirmation.new.call(event) }, to: [OrderSubmitted])
+    # store.subscribe_to_all_events(->(event) { Rails.logger.info(event.type) })
+    store.subscribe(Posts::OnPostCreated, to: [Posting::PostCreated])
+  end
 
   # Register command handlers below
-  # Rails.configuration.command_bus.tap do |bus|
-  #   bus.register(PrintInvoice, Invoicing::OnPrint.new)
-  #   bus.register(SubmitOrder,  ->(cmd) { Ordering::OnSubmitOrder.new.call(cmd) })
-  # end
+  Rails.configuration.command_bus.tap do |bus|
+    # bus.register(PrintInvoice, Invoicing::OnPrint.new)
+    # bus.register(SubmitOrder,  ->(cmd) { Ordering::OnSubmitOrder.new.call(cmd) })
+    bus.register(Posting::CreatePost, Posting::OnCreatePost.new)
+  end
 end

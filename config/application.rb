@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module DddBlogApp
   class Application < Rails::Application
+    config.paths.add 'posting/lib', eager_load: true
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
@@ -15,5 +16,7 @@ module DddBlogApp
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    config.paths.add 'lib', eager_load: true
+    config.paths.add 'posting/lib', eager_load: true
   end
 end

@@ -54,3 +54,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'rails_event_store', '~> 1.0.0'
+gem 'dry-struct'
+gem 'dry-types'
